@@ -1,0 +1,18 @@
+{
+    "name": "JC.Prototyping.Editor",
+    "rootNamespace": "JC.Prototyping.Editor",
+    "references": [
+        "GUID:3205d51b1fa576646a565f2a9e0cf8cb"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
