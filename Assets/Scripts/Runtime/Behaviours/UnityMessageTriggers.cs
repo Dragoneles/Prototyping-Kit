@@ -23,15 +23,6 @@ namespace JC.Prototyping
         OnDisable,
         OnDestroy,
 
-        // Visibility
-        OnBecameVisible,
-        OnBecameInvisible,
-
-        // Application
-        OnApplicationFocus,
-        OnApplicationPause,
-        OnApplicationQuit,
-
         // Collision (3D)
         OnCollisionEnter,
         OnCollisionStay,
@@ -57,9 +48,19 @@ namespace JC.Prototyping
         OnMouseUp,
         OnMouseUpAsButton,
 
+        // Visibility
+        OnBecameVisible,
+        OnBecameInvisible,
+
         // Hierarchy
         OnTransformParentChanged,
-        OnTransformChildrenChanged
+        OnBeforeTransformParentChanged,
+        OnTransformChildrenChanged,
+
+        // Application
+        OnApplicationFocus,
+        OnApplicationPause,
+        OnApplicationQuit,
     }
 
     /// <summary>
@@ -71,7 +72,8 @@ namespace JC.Prototyping
         [HideInInspector]
         public List<UnityMessageType> UsedMessageTypes = new();
 
-        [SerializeField]
+        // A hashset is constructed on awake and used to index message types
+        // because it's much more efficient than checking the serialized list
         private HashSet<UnityMessageType> usedMessageTypes = new();
 
         #region UnityEvents
@@ -114,6 +116,7 @@ namespace JC.Prototyping
         [SerializeField] private UnityEvent onMouseUpAsButton = new();
 
         [SerializeField] private UnityEvent onTransformParentChanged = new();
+        [SerializeField] private UnityEvent onBeforeTransformParentChanged = new();
         [SerializeField] private UnityEvent onTransformChildrenChanged = new();
         #endregion
 
@@ -169,37 +172,41 @@ namespace JC.Prototyping
         }
         #endregion
 
-        #region Visibility Messages
-        private void OnBecameVisible()
+        #region 2D Collision Messages
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (usedMessageTypes.Contains(UnityMessageType.OnBecameVisible))
-                onBecameVisible.Invoke();
+            if (usedMessageTypes.Contains(UnityMessageType.OnCollisionEnter2D))
+                onCollisionEnter2D.Invoke(collision);
         }
 
-        private void OnBecameInvisible()
+        private void OnCollisionStay2D(Collision2D collision)
         {
-            if (usedMessageTypes.Contains(UnityMessageType.OnBecameInvisible))
-                onBecameInvisible.Invoke();
-        }
-        #endregion
-
-        #region Application Messages
-        private void OnApplicationFocus(bool focus)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnApplicationFocus))
-                onApplicationFocus.Invoke(focus);
+            if (usedMessageTypes.Contains(UnityMessageType.OnCollisionStay2D))
+                onCollisionStay2D.Invoke(collision);
         }
 
-        private void OnApplicationPause(bool pause)
+        private void OnCollisionExit2D(Collision2D collision)
         {
-            if (usedMessageTypes.Contains(UnityMessageType.OnApplicationPause))
-                onApplicationPause.Invoke(pause);
+            if (usedMessageTypes.Contains(UnityMessageType.OnCollisionExit2D))
+                onCollisionExit2D.Invoke(collision);
         }
 
-        private void OnApplicationQuit()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (usedMessageTypes.Contains(UnityMessageType.OnApplicationQuit))
-                onApplicationQuit.Invoke();
+            if (usedMessageTypes.Contains(UnityMessageType.OnTriggerEnter2D))
+                onTriggerEnter2D.Invoke(collision);
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnTriggerStay2D))
+                onTriggerStay2D.Invoke(collision);
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnTriggerExit2D))
+                onTriggerExit2D.Invoke(collision);
         }
         #endregion
 
@@ -238,44 +245,6 @@ namespace JC.Prototyping
         {
             if (usedMessageTypes.Contains(UnityMessageType.OnTriggerExit))
                 onTriggerExit.Invoke(other);
-        }
-        #endregion
-
-        #region 2D Collision Messages
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnCollisionEnter2D))
-                onCollisionEnter2D.Invoke(collision);
-        }
-
-        private void OnCollisionStay2D(Collision2D collision)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnCollisionStay2D))
-                onCollisionStay2D.Invoke(collision);
-        }
-
-        private void OnCollisionExit2D(Collision2D collision)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnCollisionExit2D))
-                onCollisionExit2D.Invoke(collision);
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnTriggerEnter2D))
-                onTriggerEnter2D.Invoke(collision);
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnTriggerStay2D))
-                onTriggerStay2D.Invoke(collision);
-        }
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (usedMessageTypes.Contains(UnityMessageType.OnTriggerExit2D))
-                onTriggerExit2D.Invoke(collision);
         }
         #endregion
 
@@ -323,6 +292,20 @@ namespace JC.Prototyping
         }
         #endregion
 
+        #region Visibility Messages
+        private void OnBecameVisible()
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnBecameVisible))
+                onBecameVisible.Invoke();
+        }
+
+        private void OnBecameInvisible()
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnBecameInvisible))
+                onBecameInvisible.Invoke();
+        }
+        #endregion
+
         #region Hierarchy Messages
         private void OnTransformParentChanged()
         {
@@ -330,10 +313,36 @@ namespace JC.Prototyping
                 onTransformParentChanged.Invoke();
         }
 
+        private void OnBeforeTransformParentChanged()
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnBeforeTransformParentChanged))
+                onBeforeTransformParentChanged.Invoke();
+        }
+
         private void OnTransformChildrenChanged()
         {
             if (usedMessageTypes.Contains(UnityMessageType.OnTransformChildrenChanged))
                 onTransformChildrenChanged.Invoke();
+        }
+        #endregion
+
+        #region Application Messages
+        private void OnApplicationFocus(bool focus)
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnApplicationFocus))
+                onApplicationFocus.Invoke(focus);
+        }
+
+        private void OnApplicationPause(bool pause)
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnApplicationPause))
+                onApplicationPause.Invoke(pause);
+        }
+
+        private void OnApplicationQuit()
+        {
+            if (usedMessageTypes.Contains(UnityMessageType.OnApplicationQuit))
+                onApplicationQuit.Invoke();
         }
         #endregion
     }

@@ -20,18 +20,18 @@ namespace JC.Prototyping.Editor
         {
             EditorGUILayout.BeginVertical();
 
-            if (AddMessageTypeButton())
-                AddMessageContextMenu();
+            if (AddOrRemoveButton())
+                ShowAddOrRemoveContextMenu();
 
             EditorGUILayout.Space();
-            ShowUnityEvents();
+            ShowUsedUnityEvents();
 
             EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void ShowUnityEvents()
+        private void ShowUsedUnityEvents()
         {
             foreach (var item in component.UsedMessageTypes)
             {
@@ -47,13 +47,13 @@ namespace JC.Prototyping.Editor
             UnityEventProperty(property);
         }
 
-        private bool AddMessageTypeButton()
+        private bool AddOrRemoveButton()
         {
             var label = new GUIContent("Add/Remove Message");
             return GUILayout.Button(label, GUILayout.Height(30f));
         }
 
-        private void AddMessageContextMenu()
+        private void ShowAddOrRemoveContextMenu()
         {
             var menu = new GenericMenu();
 

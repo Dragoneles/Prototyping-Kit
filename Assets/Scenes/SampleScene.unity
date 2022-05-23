@@ -267,6 +267,9 @@ MonoBehaviour:
   onTransformParentChanged:
     m_PersistentCalls:
       m_Calls: []
+  onBeforeTransformParentChanged:
+    m_PersistentCalls:
+      m_Calls: []
   onTransformChildrenChanged:
     m_PersistentCalls:
       m_Calls: []
