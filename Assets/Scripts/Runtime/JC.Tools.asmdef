@@ -1,6 +1,6 @@
 {
-    "name": "JC.Prototyping",
-    "rootNamespace": "JC.Prototyping",
+    "name": "JC.Tools",
+    "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
