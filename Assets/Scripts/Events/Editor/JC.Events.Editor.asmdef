@@ -1,7 +1,9 @@
 {
     "name": "JC.Events.Editor",
-    "rootNamespace": "JC.EventsEditor",
-    "references": [],
+    "rootNamespace": "JC.Events.Editor",
+    "references": [
+        "GUID:ccd7736b7694fca4991aa58d9e482044"
+    ],
     "includePlatforms": [
         "Editor"
     ],
