@@ -9,9 +9,9 @@ using UnityEngine.Events;
 namespace JC.Events
 {
     [System.Serializable]
-    public class JCEvent
+    public class JCEvent : JCEventBase
     {
         [SerializeField]
-        private List<SerializedAction> _actions = new List<SerializedAction>();
+        private List<SerializedAction> _actions = new();
     }
 }
