@@ -11,5 +11,8 @@ namespace JC.Events
 
         [SerializeField]
         private SerializedArgument<Color> _testColor;
+
+        [SerializeField]
+        private JCEvent _testEvent = new JCEvent();
     }
 }

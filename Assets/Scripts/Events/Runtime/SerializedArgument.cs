@@ -13,10 +13,20 @@ using UnityEngine;
 
 namespace JC.Events
 {
+    internal interface ISerializedArgument 
+    {
+        Type Type { get; }
+    }
+
     [Serializable]
-    internal class SerializedArgument<T>
+    internal class SerializedArgument<T> : ISerializedArgument
     {
         [SerializeField, SerializeReference]
         protected T _value;
+
+        /// <summary>
+        /// The type of the serialized argument.
+        /// </summary>
+        public Type Type => typeof(T);
     }
 }

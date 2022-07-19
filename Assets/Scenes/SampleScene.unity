@@ -236,9 +236,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cfeaa61672354040ab55f234447f783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testArg:
-    _value:
-      rid: -2
+  _testFloat:
+    _value: 0
+  _testColor:
+    _value: {r: 0, g: 0, b: 0, a: 0}
+  _testEvent:
+    _actions:
+    - _target:
+        rid: -2
+      _methodName: 
+      _targetAssemblyName: 
+      _arguments: []
+    - _target:
+        rid: -2
+      _methodName: 
+      _targetAssemblyName: 
+      _arguments: []
   references:
     version: 2
     RefIds:

@@ -11,6 +11,7 @@ namespace JC.Events
     [System.Serializable]
     public class JCEvent
     {
-
+        [SerializeField]
+        private List<SerializedAction> _actions = new List<SerializedAction>();
     }
 }
