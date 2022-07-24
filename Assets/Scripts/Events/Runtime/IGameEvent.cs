@@ -1,5 +1,5 @@
 // Author:  Joseph Crump
-// Date:    07/18/22
+// Date:    07/24/22
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using UnityEngine;
 namespace JC.Events
 {
     /// <summary>
-    /// Base class for serialized <see cref="JCEvent"/>s.
+    /// Interface using as a tag for all generically-typed GameEvent classes.
     /// </summary>
-    public abstract class JCEventBase
+    internal interface IGameEvent
     {
 
     }
